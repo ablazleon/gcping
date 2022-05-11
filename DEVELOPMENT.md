@@ -18,6 +18,30 @@ $ gcloud auth application-default login  # Used by Terraform
 - In Cloud Shell, if you see errors about IPv6 addresses not resolving, run
   `./bin/prefer-ipv4.sh`
 
+For an environment in cloud run shell:
+
+- A bucket with name `gcping-tf-state-gcpingmadrid` is created.
+- Terraform, cloud cli and node are already installed.
+- Install [`ko`](https://github.com/google/ko)
+
+```
+VERSION=0.11.2 # choose the latest version
+OS=Linux     # or Darwin
+ARCH=x86_64  # or arm64, i386, s390x
+curl -L https://github.com/google/ko/releases/download/v${VERSION}/ko_${VERSION}_${OS}_${ARCH}.tar.gz | tar xzf - ko
+chmod +x ./ko
+```
+
+- Set the `KO_DOCKER_REPO` env var to the GCR repository you'd like to deploy to (e.g.,
+  `KO_DOCKER_REPO=gcr.io/gcping-349912`)
+
+- Creadentials are ensured by cloud run shell
+
+- Run `terraform init` to fetch the Terraform state, etc.
+- In Cloud Shell, if you see errors about IPv6 addresses not resolving, run
+  `./bin/prefer-ipv4.sh`
+- We need to enable cloud run admin api
+
 ## Build the frontend
 
 ```
@@ -30,7 +54,7 @@ $ npm run build  # generate the frontend
 
 ```
 $ export KO_DOCKER_REPO=gcr.io/gcping-devrel # prod only, use other repo for dev
-$ terraform apply -var image=$(ko publish -P ./cmd/ping/)
+$ terraform apply -var image=$(../ko publish -P ./cmd/ping/)
 ```
 
 This deploys the ping service to all Cloud Run regions and configures a global
