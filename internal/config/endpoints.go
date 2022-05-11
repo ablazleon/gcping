@@ -102,9 +102,9 @@ var AllEndpoints = map[string]Endpoint{
 		Region:     "europe-west1",
 		RegionName: "Belgium",
 	},
-    "europe-west1": {
+    "europe-southwest1": {
         URL:        "https://madrid1-iaka3uvbxq-ew.a.run.app",
-        Region:     "europe-west1",
+        Region:     "europe-southwest1",
         RegionName: "Madrid",
     },
 	"europe-west2": {
