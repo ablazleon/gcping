@@ -92,7 +92,7 @@ resource "google_project_service" "compute" {
 resource "google_cloud_run_service" "regions" {
   //  for_each = local.regions
   name     = "madrid1"
-  location = "europe-west1"
+  location = "europe-southwest1"
 
   template {
     metadata {
@@ -107,7 +107,7 @@ resource "google_cloud_run_service" "regions" {
         image = local.image
         env {
           name  = "REGION"
-          value = "europe-west1"
+          value = "europe-southwest1"
         }
       }
     }
@@ -141,7 +141,7 @@ resource "google_cloud_run_service_iam_member" "allUsers" {
   //for_each = google_cloud_run_service.regions
 
   service  = google_cloud_run_service.regions.name
-  location = "europe-west1"
+  location = "europe-southwest1"
   role     = "roles/run.invoker"
   member   = "allUsers"
 
