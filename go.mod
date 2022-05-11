@@ -1,3 +1,3 @@
-module github.com/GoogleCloudPlatform/gcping
+module github.com/ablazleon/gcping
 
 go 1.16
