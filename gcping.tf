@@ -24,7 +24,7 @@ provider "google-beta" {
 
 terraform {
   backend "gcs" {
-    bucket  = "gcping-tf-state"
+    bucket  = "gcping-tf-estado-madridgcping"
   }
 }
 
@@ -41,7 +41,7 @@ variable "repository" {
 }
 variable "project" {
   type    = string
-  default = "gcping-devrel"
+  default = "gcping-349912"
 }
 
 variable "domain" {
@@ -61,12 +61,13 @@ variable "domain_alias" {
 
 variable "release_bucket" {
   type    = string
-  default = "gcping-release"
+  default = "gcping-release-madrid-gcping"
 }
 
-
+/*
 data "google_cloud_run_locations" "available" {
 }
+*/
 
 resource "google_service_account" "minimal" {
   account_id = "minimal-service-account"
@@ -80,16 +81,18 @@ resource "google_project_service" "run" {
   service = "run.googleapis.com"
 }
 
+/*
 // Enable Compute Engine API.
 resource "google_project_service" "compute" {
   service = "compute.googleapis.com"
 }
+*/
 
-// Deploy image to each region.
+// Deploy image an image in a new location.
 resource "google_cloud_run_service" "regions" {
-  for_each = local.regions
-  name     = each.key
-  location = each.key
+  //  for_each = local.regions
+  name     = "madrid"
+  location = "europe-west1"
 
   template {
     metadata {
@@ -104,7 +107,7 @@ resource "google_cloud_run_service" "regions" {
         image = local.image
         env {
           name  = "REGION"
-          value = each.key
+          value = "europe-west1"
         }
       }
     }
@@ -123,6 +126,7 @@ resource "google_cloud_run_service" "regions" {
   depends_on = [google_project_service.run]
 }
 
+/*
 // Print each service URL.
 output "services" {
   value = {
@@ -130,19 +134,21 @@ output "services" {
     svc.name => svc.status[0].url
   }
 }
+*/
 
 // Make each service invokable by all users.
 resource "google_cloud_run_service_iam_member" "allUsers" {
-  for_each = google_cloud_run_service.regions
+  //for_each = google_cloud_run_service.regions
 
-  service  = google_cloud_run_service.regions[each.key].name
-  location = each.key
+  service  = google_cloud_run_service.regions.name
+  location = "europe-west1"
   role     = "roles/run.invoker"
   member   = "allUsers"
 
   depends_on = [google_cloud_run_service.regions]
 }
 
+/*
 // Create a regional network endpoint group (NEG) for each regional Cloud Run service.
 resource "google_compute_region_network_endpoint_group" "regions" {
   for_each = google_cloud_run_service.regions
@@ -175,8 +181,9 @@ resource "google_compute_global_forwarding_rule" "global" {
 output "global" {
   value = google_compute_global_address.global.address
 }
-
+*/
 locals {
+  /*
     managed_domains = var.domain_alias_flag ? [
       "www.${var.domain}",
       "global.${var.domain}",
@@ -188,10 +195,13 @@ locals {
       "global.${var.domain}",
       "${var.domain}",
     ]
-    image = var.image != "" ? var.image : "gcr.io/${var.project}/${var.repository}:latest"
-    regions = jsondecode(file("${path.module}/regions.json"))
+    */
+  image = var.image != "" ? var.image : "gcr.io/${var.project}/${var.repository}:latest"
+  //regions = jsondecode(file("${path.module}/regions.json"))
 }
 
+
+/*
 resource "random_id" "certificate" {
   byte_length = 2
   prefix      = "global-"
@@ -226,7 +236,7 @@ resource "google_compute_url_map" "global" {
   name            = "global"
   description     = "a description"
   default_service = google_compute_backend_service.global.id
-  
+
   // Create a host rule to match traffic to alias (gcpping.com)
   host_rule {
     hosts = [
@@ -285,7 +295,9 @@ resource "google_compute_global_forwarding_rule" "https_redirect" {
   port_range = "80"
   ip_address = google_compute_global_address.global.address
 }
+*/
 
+/*
 // Create a bucket for CLI releases
 resource "google_storage_bucket" "releases" {
   name = "${var.release_bucket}"
@@ -297,3 +309,4 @@ resource "google_storage_bucket_iam_member" "public_access" {
   role = "roles/storage.objectViewer"
   member = "allUsers"
 }
+*/
