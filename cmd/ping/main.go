@@ -22,7 +22,7 @@ import (
 	"os"
 	"sync"
 
-	"github.com/GoogleCloudPlatform/gcping/internal/config"
+	"github.com/ablazleon/gcping/internal/config"
 )
 
 var once sync.Once
