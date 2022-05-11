@@ -53,7 +53,7 @@ $ npm run build  # generate the frontend
 ## Deploy
 
 ```
-$ export KO_DOCKER_REPO=gcr.io/gcping-devrel # prod only, use other repo for dev
+$ export KO_DOCKER_REPO=gcr.io/gcping-349912 # prod only, use other repo for dev
 $ terraform apply -var image=$(../ko publish -P ./cmd/ping/)
 ```
 

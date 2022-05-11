@@ -91,7 +91,7 @@ resource "google_project_service" "compute" {
 // Deploy image an image in a new location.
 resource "google_cloud_run_service" "regions" {
   //  for_each = local.regions
-  name     = "madrid"
+  name     = "madrid1"
   location = "europe-west1"
 
   template {
