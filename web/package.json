@@ -8,7 +8,7 @@
     }
   },
   "scripts": {
-    "start": "parcel",
+    "start": "parcel -p 2000",
     "build": "parcel build",
     "lint": "eslint src/ && stylelint src/css",
     "fix": "prettier --write src/ && eslint --fix src/ && stylelint --fix src/css"
