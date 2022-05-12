@@ -21,9 +21,9 @@ name: run
 
 on:
   push:
-    branches: [ main ]
+    branches: [ dev/madrid-gcping ]
   pull_request:
-    branches: [ main ]
+    branches: [ dev/madrid-gcping ]
 
 jobs:
   stage_pr:
