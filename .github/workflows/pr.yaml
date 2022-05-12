@@ -22,8 +22,7 @@ name: run
 on:
   push:
     branches: [ dev/madrid-gcping ]
-  pull_request:
-    branches: [ dev/madrid-gcping ]
+
 
 jobs:
   stage_pr:
@@ -31,7 +30,7 @@ jobs:
 
     permissions:
       contents: 'read'
-      pull-requests: 'write'
+      push: 'write'
       id-token: 'write'
 
     steps:
@@ -72,19 +71,19 @@ jobs:
       name: 'Stage to Cloud Run'
       uses: 'google-github-actions/deploy-cloudrun@main'
       with:
-        service: 'pr-${{ github.event.pull_request.number }}-${{ github.sha }}'
+        service: 'pr-${{ github.event.push.number }}-${{ github.sha }}'
         image: '${{ env.IMAGE }}'
 
     - id: 'allowAll'
       name: 'Allow unauthenticated requests to staging endpoint'
-      run: 'gcloud run services add-iam-policy-binding pr-${{ github.event.pull_request.number }}-${{ github.sha }} --member="allUsers" --role="roles/run.invoker" --region=us-central1'
+      run: 'gcloud run services add-iam-policy-binding pr-${{ github.event.push.number }}-${{ github.sha }} --member="allUsers" --role="roles/run.invoker" --region=us-central1'
 
-    - run: echo ${{ github.event.pull_request.comments_url }}
+    - run: echo ${{ github.event.push.comments_url }}
     
     - name: Comment staged Cloud Run URL
       timeout-minutes: 1
       env:
-          COMMENTS_URL: ${{ github.event.pull_request.comments_url }}
+          COMMENTS_URL: ${{ github.event.push.comments_url }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
           curl \
