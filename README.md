@@ -10,7 +10,7 @@ Se observa como está desplegado en cloud run:
 
 ![Cloud Run](./cloudrun.png)
 
-Se a;ade la siguiente url:
+Se añade la siguiente url:
 
 ```
 
