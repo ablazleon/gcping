@@ -4,7 +4,7 @@
 #
 # Prerequisites: having configured the secrets in the repo
 # GCP_PROJECT
-# GCP_CREDENTIALS, it is configured a service account with the minimal permissions. But first with admin permissions
+# GCP_CREDENTIALS, it is configured a service account with the minimal permissions. But first with admin permissions json
 #
 # GITHUB_TOKEN, is not needed, it is already installed (https://dev.to/github/the-githubtoken-in-github-actions-how-it-works-change-permissions-customizations-3cgp#:~:text=The%20GITHUB_TOKEN%20secret%20is%20basically,repository%20that%20contains%20your%20workflow.)
 #
