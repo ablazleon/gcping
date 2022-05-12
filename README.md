@@ -2,6 +2,9 @@
 
 [![Build Status](https://github.com/GoogleCloudPlatform/gcping/actions/workflows/tests.yml/badge.svg)](https://github.com/GoogleCloudPlatform/gcping/actions/workflows/tests.yml)
 
+Se propone añadir la región de Madrid.
+
+![Arquitectura](./Arquitectura.png)
 
 gcpping is both a command line tool and a webapp that reports median latency to
 Google Cloud regions. The webapp is hosted at [gcping.com](http://gcping.com).
