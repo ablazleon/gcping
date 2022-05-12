@@ -6,6 +6,23 @@ Se propone añadir la región de Madrid.
 
 ![Arquitectura](./Arquitectura.png)
 
+Se observa como está desplegado en cloud run:
+
+![Cloud Run](./cloudrun.png)
+
+```
+	"europe-west1": {
+		URL:        "https://europe-west1-5tkroniexa-ew.a.run.app",
+		Region:     "europe-west1",
+		RegionName: "Belgium",
+	},
+    "europe-southwest1": {
+        URL:        "https://madrid1-iaka3uvbxq-ew.a.run.app",
+        Region:     "europe-southwest1",
+        RegionName: "Madrid",
+    },
+```
+
 gcpping is both a command line tool and a webapp that reports median latency to
 Google Cloud regions. The webapp is hosted at [gcping.com](http://gcping.com).
 To install the command line tool, see below.
