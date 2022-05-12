@@ -1,6 +1,27 @@
+
+# This action whenever there is a push or a pull request on dev/mddrid-gcping branch
+# active the following steps to deploy a dev env:
+#
+# Prerequisites: having configured the secrets in the repo
+# GCP_PROJECT
+# GCP_CREDENTIALS, it is configured a service account with the minimal permissions. But first with admin permissions
+#
+# GITHUB_TOKEN, is not needed, it is already installed (https://dev.to/github/the-githubtoken-in-github-actions-how-it-works-change-permissions-customizations-3cgp#:~:text=The%20GITHUB_TOKEN%20secret%20is%20basically,repository%20that%20contains%20your%20workflow.)
+#
+# Afterwards, allow apis: cloud run api
+#
+# 1. checkout
+# 2. setup node and build the static assets
+# 3. the image is deployed to cloud run
+# 4. allow cloud run to be accessed
+# 5. insert a comment
+#
+
 name: run
 
 on:
+  push:
+    branches: [ main ]
   pull_request:
     branches: [ main ]
 
@@ -39,7 +60,7 @@ jobs:
       name: 'Set up ko'
       id: ko
     - env:
-        KO_DOCKER_REPO: 'gcr.io/gcping-devrel'
+        KO_DOCKER_REPO: 'gcr.io/${{ secrets.GCP_PROJECT }}'
       name: 'Publish to Google Container Registry'
       run: |-
         gcloud auth configure-docker gcr.io --quiet
