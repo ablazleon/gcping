@@ -30,7 +30,6 @@ jobs:
 
     permissions:
       contents: 'read'
-      push: 'write'
       id-token: 'write'
 
     steps:
