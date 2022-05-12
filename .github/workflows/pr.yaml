@@ -76,19 +76,10 @@ jobs:
     - id: 'allowAll'
       name: 'Allow unauthenticated requests to staging endpoint'
       run: 'gcloud run services add-iam-policy-binding pr-${{ github.event.push.number }}-${{ github.sha }} --member="allUsers" --role="roles/run.invoker" --region=us-central1'
-    
-    - name: Comment staged Cloud Run URL
-      timeout-minutes: 1
-      env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-          curl \
-            -X POST \
-            https://api.github.com/repos/$GITHUB_REPOSITORY/commits/$GITHUB_SHA/comments \
-            -H "Content-Type: application/json" \
-            -H "Authorization: token $GITHUB_TOKEN" \
-            --data '{ "body": "PR staged at '"${{ steps.deploy.outputs.url }}"'"}'
-          sleep 10
 
-    
-            
+    - name: Comment staged Cloud Run URL
+      uses: peter-evans/commit-comment@v2
+      with:
+        body: |
+          Push staged at '"${{ steps.deploy.outputs.url }}"'
+      
