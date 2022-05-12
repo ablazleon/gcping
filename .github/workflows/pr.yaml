@@ -2,7 +2,7 @@
 # This action whenever there is a push or a pull request on dev/mddrid-gcping branch
 # active the following steps to deploy a dev env:
 #
-# Prerequisites: having configured the secrets in the repo
+# Prerequisites: having configured the secrets in the repo, in repository secrets (https://stackoverflow.com/questions/67964110/how-to-access-secrets-when-using-flutter-web-with-github-actions/67998780#67998780)
 # GCP_PROJECT
 # GCP_CREDENTIALS, it is configured a service account with the minimal permissions. But first with admin permissions json
 #
